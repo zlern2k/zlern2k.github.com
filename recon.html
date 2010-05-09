@@ -1,0 +1,54 @@
+<head>
+  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+    google.load("jquery", "1.4.2");
+    google.load("jqueryui", "1.8.1");
+  </script>
+  
+	<style type="text/css">
+    #shield { width: 150px; }
+    .commands ul { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
+    .commands li { margin: 5px; padding: 5px; width: 150px; border: 1px solid; }
+	</style>
+	<script type="text/javascript">
+	$(function() {
+    $("#shield").droppable({
+      greedy: true,
+      deactivate: function(event, ui) {
+        if (!event.originalEvent.shielded) {
+          ui.draggable.remove();
+        }
+      },
+      drop: function(event, ui) {
+        event.originalEvent['shielded'] = true;
+      }
+    });
+//		$("#full_page").droppable({
+//		  deactivate: function(event, ui) { console.debug("deactivate outer", event, ui); },
+//		  drop: function(event, ui) { console.debug("drop outer", event, ui); }
+//		});
+		$("#sortable").sortable({
+			revert: true,
+			remove: function(event, ui) { console.debug("remove", event, ui); }
+		});
+		$("ul, li").disableSelection();
+	});
+	</script>
+</head>
+<body id="full_page" >
+<div class="commands">
+	
+Recon controls
+  <div id="shield">
+    <ul id="sortable">
+      <li class="ui-state-default">Item 1</li>
+      <li class="ui-state-default">Item 2</li>
+      <li class="ui-state-default">Item 3</li>
+      <li class="ui-state-default">Item 4</li>
+      <li class="ui-state-default">Item 5</li>
+    </ul>
+  </div>
+
+</div><!-- End commands -->
+
+</body>
