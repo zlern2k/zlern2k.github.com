@@ -5,14 +5,18 @@
     google.load("jqueryui", "1.8.1");
   </script>
   
-	<style type="text/css">
+  <style type="text/css">
+    #available {  }
     #shield { width: 150px; }
+    #program { width: 150px; min-height: 50px; background: #eeeeff; }
     .commands ul { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
     .commands li { margin: 5px; padding: 5px; width: 150px; border: 1px solid; }
-	</style>
-	<script type="text/javascript">
-	$(function() {
+  </style>
+  <script type="text/javascript">
+  $(function() {
+
     $("#shield").droppable({
+      // accept: '#available li',
       greedy: true,
       deactivate: function(event, ui) {
         if (!event.originalEvent.shielded) {
@@ -27,25 +31,39 @@
 //		  deactivate: function(event, ui) { console.debug("deactivate outer", event, ui); },
 //		  drop: function(event, ui) { console.debug("drop outer", event, ui); }
 //		});
-		$("#sortable").sortable({
-			revert: true,
-			remove: function(event, ui) { console.debug("remove", event, ui); }
-		});
-		$("ul, li").disableSelection();
-	});
-	</script>
+
+    $("#program").sortable({
+      cursor: 'move',
+      revert: true,
+      remove: function(event, ui) { console.debug("remove", event, ui); }
+    });
+
+    $("#available li").draggable({
+      connectToSortable: "#program",
+      helper: 'clone',
+      revert: 'invalid',
+      cursor: 'move'
+    });
+
+    $("ul, li").disableSelection();
+  });
+  </script>
 </head>
 <body id="full_page" >
 <div class="commands">
-	
-Recon controls
+
+  <div>
+    Available Robot Commands
+    <ul id="available">
+      <li class="forward">Forward</li>
+      <li class="rotate_left">Rotate Left</li>
+      <li class="rotate_right">Rotate Right</li>
+    </ul>
+  </div>
+  
   <div id="shield">
-    <ul id="sortable">
-      <li class="ui-state-default">Item 1</li>
-      <li class="ui-state-default">Item 2</li>
-      <li class="ui-state-default">Item 3</li>
-      <li class="ui-state-default">Item 4</li>
-      <li class="ui-state-default">Item 5</li>
+    Recon program
+    <ul id="program">
     </ul>
   </div>
 
